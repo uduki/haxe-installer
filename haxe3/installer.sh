@@ -6,8 +6,8 @@
 HAXE_TMP=bin/haxe
 NEKO_TMP=bin/neko
 PREFIX=/usr/local
-HAXE_URL="http://haxe.org/file/haxe-3.0.0-linux64.tar.gz"
-HAXE_TAR="haxe-3.0.0-linux64.tar.gz"
+HAXE_URL="http://haxe.org/file/haxe-3.0.1-linux64.tar.gz"
+HAXE_TAR="haxe-3.0.1-linux64.tar.gz"
 HAXE_ARCHIVE_DIR=""
 NEKO_URL="http://nekovm.org/_media/neko-2.0.0-linux64.tar.gz?id=download&cache=cache"
 NEKO_TAR="neko-2.0.0-linux64.tar.gz?id=download&cache=cache"
