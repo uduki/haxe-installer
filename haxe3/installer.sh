@@ -3,18 +3,13 @@
 #----------------------------#
 #         Variables          #
 #----------------------------#
-HAXE_TMP=bin/haxe
-NEKO_TMP=bin/neko
+HAXE_TMP=bin
 PREFIX=/usr/local
+ARCHITECTURE="64" # "64" or "". "" is 32bit.
 HAXE_VER="3.1.3"
-HAXE_URL="http://haxe.org/file/haxe-$HAXE_VER-linux64.tar.gz"
-HAXE_TAR="haxe-$HAXE_VER-linux64.tar.gz"
-HAXE_ARCHIVE_DIR=""
-NEKO_VER="2.0.0"
-NEKO_URL="http://nekovm.org/_media/neko-$NEKO_VER-linux64.tar.gz?id=download&cache=cache"
-NEKO_TAR="neko-$NEKO_VER-linux64.tar.gz?id=download&cache=cache"
-NEKO_ARCHIVE_DIR="neko-$NEKO_VER-linux"
-
+HAXE_TAR="haxe-$HAXE_VER-linux$ARCHITECTURE.tar.gz"
+HAXE_URL="http://haxe.org/file/$HAXE_TAR" # new? -> http://haxe.org/download/file/$HAXE_VER/$HAXE_TAR
+HAXE_ARCHIVE_DIR="haxe-$HAXE_VER"
 
 #----------------------------#
 #       Install Haxe         #
@@ -25,63 +20,37 @@ fi
 mkdir -p $HAXE_TMP
 tar zxvf $HAXE_TAR -C $HAXE_TMP
 
-if [ "$HAXE_ARCHIVE_DIR" != "" ]; then
-    HAXE_TMP=$HAXE_TMP/$HAXE_ARCHIVE_DIR
-fi
-
 if [ -e $PREFIX/bin/haxe ]; then
-    sudo rm -f $PREFIX/bin/haxe
+    rm -f $PREFIX/bin/haxe
 fi
 
-sudo cp $HAXE_TMP/haxe $PREFIX/bin/haxe
+if [ -e $PREFIX/bin/haxelib ]; then
+    rm -f $PREFIX/bin/haxelib
+fi
+
+if [ ! -d $PREFIX/bin ]; then
+    mkdir -p $PREFIX/bin
+fi
+
+cp $HAXE_TMP/$HAXE_ARCHIVE_DIR/haxe $PREFIX/bin/haxe
+cp $HAXE_TMP/$HAXE_ARCHIVE_DIR/haxelib $PREFIX/bin/haxelib
 
 if [ -e $PREFIX/lib/haxe ]; then
-    sudo rm -rf $PREFIX/lib/haxe
+    rm -rf $PREFIX/lib/haxe
 fi
 
-sudo mkdir -p $PREFIX/lib/haxe/lib
-sudo chmod 777 $PREFIX/lib/haxe/lib
-sudo cp -r $HAXE_TMP/std $PREFIX/lib/haxe
-sudo cp $HAXE_TMP/std/tools/haxelib/haxelib.sh $PREFIX/bin/haxelib
-sudo chmod +x $PREFIX/bin/haxelib
-
-
-#----------------------------#
-#       Install Neko         #
-#----------------------------#
-if [ ! -e $NEKO_TAR ]; then
-    wget $NEKO_URL
-fi
-mkdir -p $NEKO_TMP
-tar zxvf $NEKO_TAR -C $NEKO_TMP
-
-if [ "$NEKO_ARCHIVE_DIR" != "" ]; then
-    NEKO_TMP=$NEKO_TMP/$NEKO_ARCHIVE_DIR
-fi
-
-sudo cp $NEKO_TMP/libneko.so $PREFIX/lib
-sudo cp $NEKO_TMP/neko $NEKO_TMP/nekoc $NEKO_TMP/nekotools $NEKO_TMP/nekoml $NEKO_TMP/nekoml.std $PREFIX/bin
-
-if [ -e $PREFIX/lib/neko -a ! -d $PREFIX/lib/neko ]; then
-    sudo rm -f $PREFIX/lib/neko
-fi
-
-if [ ! -d $PREFIX/lib/neko ]; then
-    sudo mkdir $PREFIX/lib/neko
-fi
-
-sudo cp $NEKO_TMP/*.ndll $PREFIX/lib/neko
-
+mkdir -p $PREFIX/lib/haxe/lib
+chmod 777 $PREFIX/lib/haxe/lib
+cp -r $HAXE_TMP/$HAXE_ARCHIVE_DIR/std $PREFIX/lib/haxe
 
 #----------------------------#
 #      Setup Haxe lib        #
 #----------------------------#
-
 cat <<EOF
 
 #---------------------------------#
 
-Done Haxe and Neko install.
+Done installing Haxe.
 Please run the following commands.
     # su
     # ldconfig
