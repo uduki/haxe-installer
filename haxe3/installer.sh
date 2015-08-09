@@ -6,7 +6,7 @@
 HAXE_TMP=bin
 PREFIX=/usr/local
 ARCHITECTURE="64" # "64" or "". "" is 32bit.
-HAXE_VER="3.1.3"
+HAXE_VER="3.2.0"
 HAXE_TAR="haxe-$HAXE_VER-linux$ARCHITECTURE.tar.gz"
 HAXE_URL="http://haxe.org/file/$HAXE_TAR" # new? -> http://haxe.org/download/file/$HAXE_VER/$HAXE_TAR
 HAXE_ARCHIVE_DIR="haxe-$HAXE_VER"
